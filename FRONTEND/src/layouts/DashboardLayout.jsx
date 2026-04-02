@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Shield, AlertTriangle, FileText, Settings, HelpCircle, LogOut, Bell, User } from 'lucide-react';
+import { Home, Shield, AlertTriangle, FileText, Settings, HelpCircle, LogOut, Bell, User, ShieldCheck, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const SidebarLink = ({ to, icon: Icon, label, isActive }) => (
