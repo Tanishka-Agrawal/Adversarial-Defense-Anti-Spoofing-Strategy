@@ -1,159 +1,44 @@
-# Adversarial-Defense-Anti-Spoofing-Strategy
-<!-- ================= HEADER ================= -->
+# 🛡️ GigShield AI: Parametric Income Protection
 
-<h1 align="center">🚀 Smart Logistics Fraud Detection System</h1>
+**Winning Hackathon Submission: Guidewire Phase 2**
 
-<p align="center">
-<b>Adversarial AI-powered Anti-Spoofing & Fraud Ring Detection</b>
-</p>
-
-<p align="center">
-
-<img src="https://img.shields.io/badge/AI-Enabled-blue?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Fraud-Detection-red?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Real--Time-Analytics-green?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Graph-AI-orange?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Status-Production--Ready-brightgreen?style=for-the-badge" />
-
-</p>
-
-<p align="center">
-<img src="https://img.shields.io/github/stars/Vanshika290/Adversarial-Defense-Anti-Spoofing-Strategy?style=for-the-badge" />
-<img src="https://img.shields.io/github/forks/Vanshika290/Adversarial-Defense-Anti-Spoofing-Strategy?style=for-the-badge" />
-<img src="https://img.shields.io/github/issues/Vanshika290/Adversarial-Defense-Anti-Spoofing-Strategy?style=for-the-badge" />
-<img src="https://img.shields.io/github/last-commit/Vanshika290/Adversarial-Defense-Anti-Spoofing-Strategy?style=for-the-badge" />
-</p>>
+### 🚀 Vision
+GigShield is a cutting-edge **Parametric Insurance Platform** designed to protect the 10M+ gig delivery partners (Zomato, Swiggy, Blinkit) in India from income loss due to external disruptions like extreme weather, floods, and platform outages. **No paperwork. Just data. Just Payouts.**
 
 ---
 
-<!-- ============ HERO TAGLINE ============ -->
-
-<h3 align="center">⚡ Detecting Fraud is Easy. Detecting Coordinated Fraud Rings is Intelligence.</h3>
-
-<p align="center">
-Built for high-risk, real-time logistics systems where adversaries continuously evolve.
-</p>
-
----
-
-## 📌 Problem Statement
-
-Modern logistics platforms face **increasingly sophisticated fraud attacks**, where malicious actors:
-- Spoof GPS locations  
-- Simulate fake delivery failures  
-- Operate in coordinated fraud rings  
-
-Traditional systems rely heavily on **GPS validation**, which is easily bypassed using spoofing tools.
+### 💎 Phase 2: Key Features
+1.  **AI Risk Engine**: Trained `RandomForestRegressor` on logistics datasets to predict income loss before it happens.
+2.  **3D Interactive Dashboard**: A premium, glassmorphic UI with 3D-tilt effects and live AI simulation widgets.
+3.  **Real-Time Monitoring**: Live backend integration with **OpenWeatherMap API** to trigger automated payouts.
+4.  **Multi-Platform Aggregation**: Unified verification for Zomato, Swiggy, Blinkit, and Zepto delivery partners.
+5.  **Smart Contract Logic**: Simulated Guidewire integration for "Zero-Touch" claims—money reaches the worker's UPI ID in < 5 mins when conditions are met.
 
 ---
 
-## 💡 Our Solution
-
-We propose an **Adversarial AI-powered Defense System** that:
-- Detects **location spoofing in real-time**
-- Identifies **coordinated fraud rings using graph intelligence**
-- Ensures **fair treatment of genuine delivery partners**
-
----
-![WhatsApp Image 2026-03-20 at 00 29 28](https://github.com/user-attachments/assets/f3f06ecf-7140-45f2-be92-a37a8bb4479c)
-
-
-## 🏗️ System Architecture
-
-> Multi-layered AI pipeline combining behavioral, device, and network intelligence
-
-- 📍 Data Collection (GPS, Sensors, Network)
-- ⚙️ Feature Engineering (trajectory, motion, anomalies)
-- 🤖 ML Models:
-  - Sequence Model (LSTM / Transformer)
-  - Device Spoof Classifier
-  - Graph Anomaly Detection
-- 🧠 Risk Scoring Engine (Ensemble Decision)
-- ⚖️ Decision Layer (Approve / Verify / Reject)
+### 🛠️ Tech Stack
+*   **Backend**: FastAPI (Python), Scikit-Learn (AI Model), Pandas.
+*   **Frontend**: React.js, Tailwind CSS, Framer Motion (3D/Glassmorphism), Lucide Icons.
+*   **APIs**: OpenWeatherMap, Guidewire Simulated Payouts.
 
 ---
 
-## 🔐 Adversarial Defense & Anti-Spoofing Strategy
+### 🖥️ How to Run
+#### Backend
+```bash
+cd BACKEND
+pip install -r requirements.txt
+python main.py
+```
 
-### 🧠 Differentiation: Real vs Fraud
-
-| Genuine User | Fraudulent Actor |
-|-------------|----------------|
-| Gradual movement | Sudden location jumps |
-| Real sensor data | No sensor consistency |
-| Network degradation | Fake stable signals |
-| Random behavior | Repeated patterns |
-
-➡️ We analyze **behavior over time**, not just location.
-
----
-
-### 📊 Data Intelligence (Beyond GPS)
-
-- 📍 Location: GPS + network triangulation  
-- 📱 Device: accelerometer, gyroscope, root/emulator detection  
-- 🌐 Network: IP, latency, VPN detection  
-- ⏱ Time: burst patterns, repeated failures  
-- 🧑‍🤝‍🧑 Graph: shared devices, coordinated activity  
-- 🌦 Context: weather, traffic  
+#### Frontend
+```bash
+cd FRONTEND
+npm install
+npm run dev
+```
 
 ---
 
-### ⚖️ UX Balance (Fairness First)
-
-| Risk Level | Action |
-|----------|--------|
-| 🟢 Low | Instant approval |
-| 🟡 Medium | Soft verification |
-| 🔴 High | Hold + deep analysis |
-
-> We ensure **zero penalty for honest users**.
-
----
-
-## 🛡️ Key Features
-
-- ✅ Real-time fraud detection  
-- ✅ Graph-based fraud ring identification  
-- ✅ Multi-signal validation (not GPS dependent)  
-- ✅ Low false positives  
-- ✅ Scalable architecture  
-
----
-
-## 🚀 Innovation Highlights
-
-- 🧠 Adversarial-aware system design  
-- 🧑‍🤝‍🧑 Graph-based fraud detection  
-- ⚡ Real-time decision engine  
-- ⚖️ Balanced UX (security + fairness)  
-
----
-
-## 🎯 Why This Solution Stands Out
-
-- Detects **both individual fraud AND organized syndicates**  
-- Works in **real-world conditions (network drops, bad weather)**  
-- Designed for **future evolving threats**  
-
----
-
-## 🔮 Future Enhancements
-
-- 🔗 Integration with real-time delivery platforms  
-- 🧠 Self-learning adaptive models  
-- 🌍 Large-scale fraud intelligence network  
-
----
-
-<h3 align="center">💡 Final Takeaway</h3>
-
-<p align="center">
-<b>
-We are not just detecting fraud — we are building an intelligent system that evolves faster than attackers.
-</b>
-</p>
-
----
-
-<br>
+### 👨‍💻 Team
+**Hackathon Phase 2 Integration Completed.** Ready for final review.

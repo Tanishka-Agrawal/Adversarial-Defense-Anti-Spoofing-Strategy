@@ -91,6 +91,35 @@ const Overview = () => {
         ))}
       </div>
 
+      {/* NEW: Live Payout Timeline */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full bg-slate-950 p-8 rounded-[2.5rem] border-2 border-brand-blue shadow-2xl relative overflow-hidden"
+      >
+        <div className="absolute top-0 right-0 p-6">
+           <span className="flex items-center gap-2 text-brand-lightgreen font-black text-xs uppercase tracking-widest"><ShieldCheck className="w-4 h-4"/> SMART CONTRACT: EXECUTING</span>
+        </div>
+        <h3 className="text-2xl font-black text-white mb-10 flex items-center gap-4">
+          <Activity className="w-8 h-8 text-brand-blue" /> Your Active Payout Tracker
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+           <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-800 -translate-y-1/2 hidden md:block"></div>
+           {[
+             { step: "Monitoring", status: "Active", dotColor: "bg-brand-blue shadow-[0_0_15px_#2563eb]" },
+             { step: "Disrupted", status: "Waiting", dotColor: "bg-slate-700" },
+             { step: "Verified", status: "Next", dotColor: "bg-slate-700" },
+             { step: "Paid", status: "Final", dotColor: "bg-slate-700" }
+           ].map((s, i) => (
+             <div key={i} className="flex flex-col items-center md:items-start relative z-10">
+               <div className={`w-8 h-8 rounded-full mb-4 border-4 border-slate-950 ${s.dotColor}`}></div>
+               <p className="text-white font-black text-xl tracking-tight">{s.step}</p>
+               <p className="text-slate-500 font-bold text-sm uppercase tracking-widest">{s.status}</p>
+             </div>
+           ))}
+        </div>
+      </motion.div>
+
       {/* Interactive AI Simulation Widget */}
       <motion.section 
         initial={{ opacity: 0 }}

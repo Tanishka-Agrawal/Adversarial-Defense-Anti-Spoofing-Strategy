@@ -85,9 +85,12 @@ const DashboardLayout = () => {
           </h2>
           
           <div className="flex items-center gap-6">
+            <button className="px-5 py-2 rounded-xl bg-brand-blue/10 text-brand-blue font-black border border-brand-blue/20 hover:bg-brand-blue/20 transition-all shadow-sm">
+               ENG / हिं
+            </button>
             <button className="relative p-4 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-              <Bell className="w-6 h-6" />
-              <span className="absolute top-3 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-slate-900 shadow-sm"></span>
+               <Bell className="w-6 h-6" />
+               <span className="absolute top-3 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-slate-900 shadow-sm"></span>
             </button>
             <div className="flex items-center gap-4 pl-6 border-l border-slate-200 dark:border-slate-700">
               <div className="w-14 h-14 rounded-2xl bg-brand-blue/20 border border-brand-blue/30 text-brand-blue flex items-center justify-center font-black text-2xl shadow-inner uppercase">
@@ -101,8 +104,18 @@ const DashboardLayout = () => {
           </div>
         </header>
 
+        {/* Live Disruption Ticker */}
+        <div className="bg-brand-blue/90 text-white py-3 overflow-hidden whitespace-nowrap border-b border-brand-blue/20 relative z-20">
+          <div className="flex animate-marquee gap-10 items-center">
+            <span className="flex items-center gap-2 font-black uppercase text-sm"><AlertTriangle className="w-4 h-4 text-brand-lightgreen" /> LIVE: Heavy Rain in Mumbai West - Parametric Payouts Active</span>
+            <span className="flex items-center gap-2 font-black uppercase text-sm"><ShieldCheck className="w-4 h-4 text-brand-lightgreen" /> ALL SYSTEMS GO: Zomato, Swiggy, Blinkit Sync Stable</span>
+            <span className="flex items-center gap-2 font-black uppercase text-sm"><Activity className="w-4 h-4 text-brand-lightgreen" /> NEWS: New Heatwave Protocol added for Delhi/NCR zones</span>
+            <span className="flex items-center gap-2 font-black uppercase text-sm"><AlertTriangle className="w-4 h-4 text-brand-lightgreen" /> LIVE: Heavy Rain in Mumbai West - Parametric Payouts Active</span>
+          </div>
+        </div>
+
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-6 lg:p-10 relative">
+        <main className="flex-1 overflow-y-auto p-6 lg:p-10 relative bg-slate-50 dark:bg-slate-950">
           <Outlet />
         </main>
       </div>
