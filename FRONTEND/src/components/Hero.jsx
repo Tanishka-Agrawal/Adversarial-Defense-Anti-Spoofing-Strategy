@@ -1,84 +1,92 @@
-import React from 'react';
+import hero3D from '../assets/hero3d.png';
 import { motion } from 'framer-motion';
-import { ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 const Hero = () => {
   return (
-    <section className="relative pt-36 pb-24 lg:pt-56 lg:pb-40 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute top-1/4 -left-64 w-[500px] h-[500px] bg-brand-blue/20 dark:bg-brand-blue/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob"></div>
-      <div className="absolute top-1/3 -right-64 w-[500px] h-[500px] bg-brand-lightgreen/20 dark:bg-brand-lightgreen/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-full max-w-2xl h-[500px] bg-brand-teal/20 dark:bg-brand-teal/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-50 animate-blob" style={{ animationDelay: '4s' }}></div>
+    <section className="relative pt-24 pb-20 lg:pt-36 lg:pb-32 overflow-hidden bg-white dark:bg-slate-950">
+      {/* Background Blobs */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-brand-blue/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute bottom-1/4 -right-32 w-[600px] h-[600px] bg-brand-lightgreen/5 rounded-full blur-[120px] animate-pulse delay-1000"></div>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 backdrop-blur-sm mb-12 shadow-sm"
-          >
-            <span className="flex h-4 w-4 rounded-full bg-brand-lightgreen"></span>
-            <span className="text-lg font-black text-slate-700 dark:text-slate-300">New: Automated Payouts via UPI in &lt; 5 mins</span>
-          </motion.div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+          <div className="flex-1 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-brand-blue font-black text-sm uppercase tracking-widest mb-10"
+            >
+              <div className="w-2 h-2 rounded-full bg-brand-blue animate-ping"></div>
+              Phase 2: LIVE Parametric Payouts
+            </motion.div>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-7xl md:text-[7rem] font-black tracking-tight mb-12 text-slate-900 dark:text-white leading-tight"
-          >
-            AI-Powered Income <br className="hidden md:block"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-teal-400"> Protection for Gig Workers</span>
-          </motion.h1>
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-6xl md:text-8xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tighter mb-8"
+            >
+              Protecting the <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-indigo-500 to-teal-400">Backbone of India's</span> <br/>
+              Gig Economy
+            </motion.h1>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-2xl md:text-3xl font-medium text-slate-600 dark:text-slate-400 mb-14 max-w-4xl mx-auto leading-relaxed"
-          >
-            Don't let weather, extreme pollution, or environmental disruptions slash your daily earnings. GigShield AI provides instant, automated income loss coverage for delivery partners.
-          </motion.p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-bold mb-12 max-w-2xl leading-relaxed"
+            >
+              The first AI-enabled Parametric Insurance for Zomato/Swiggy partners. Loss of Income triggers automatically. Instant Payouts. **No Questions Asked.**
+            </motion.p>
+
+            <div className="flex flex-col sm:flex-row gap-6 mb-16">
+              <Link to="/signup" className="px-10 py-5 bg-brand-blue text-white rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-[0_20px_50px_rgba(37,99,235,0.3)]">
+                Get Covered Now
+              </Link>
+              <button className="px-10 py-5 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-2xl font-black text-xl hover:bg-slate-50 transition-colors">
+                View 3D Demo
+              </button>
+            </div>
+            
+            {/* Stats section */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+               {[
+                 { label: "Payout Time", val: "5 Mins" },
+                 { label: "Partners", val: "10k+" },
+                 { label: "Claims", val: "Instant" },
+                 { label: "Paperwork", val: "Zero" }
+               ].map((stat, i) => (
+                 <motion.div 
+                    key={i} 
+                    initial={{ opacity: 0, scale: 0.8 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    transition={{ delay: 0.4 + (i*0.1) }}
+                    className="p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-center"
+                 >
+                   <p className="text-2xl font-black text-brand-blue">{stat.val}</p>
+                   <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{stat.label}</p>
+                 </motion.div>
+               ))}
+            </div>
+          </div>
 
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-8 justify-center"
+            initial={{ opacity: 0, rotateY: 30, scale: 0.8 }}
+            animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+            className="flex-1 relative"
           >
-            <Link to="/signup" className="px-12 py-6 bg-brand-blue hover:bg-blue-600 text-white rounded-3xl font-black transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:scale-105 flex items-center justify-center gap-4 text-2xl">
-              <ShieldCheck className="w-10 h-10" />
-              Get Protected
-            </Link>
-            <a href="#how-it-works" className="px-12 py-6 bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 border hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white rounded-3xl font-black transition-all shadow-sm flex items-center justify-center text-2xl">
-              Learn More
-            </a>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto border-t border-slate-200 dark:border-slate-800/50 pt-10"
-          >
-            <div className="flex flex-col items-center">
-              <span className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-2">20-30%</span>
-              <span className="text-sm md:text-base font-medium text-slate-500 dark:text-slate-400 text-center">Income lost to disruptions</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-2">Zero</span>
-              <span className="text-sm md:text-base font-medium text-slate-500 dark:text-slate-400 text-center">Paperwork required</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-2">5m</span>
-              <span className="text-sm md:text-base font-medium text-slate-500 dark:text-slate-400 text-center">Average payout time</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="text-4xl md:text-5xl font-black text-brand-lightgreen mb-2">10k+</span>
-              <span className="text-sm md:text-base font-medium text-slate-500 dark:text-slate-400 text-center">Partners Protected</span>
-            </div>
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-10"
+            >
+               <img src={hero3D} alt="3D Protection" className="w-full max-w-2xl mx-auto drop-shadow-[0_50px_100px_rgba(37,99,235,0.4)]" />
+            </motion.div>
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-15 bg-brand-blue/20 blur-3xl rounded-full"></div>
           </motion.div>
         </div>
       </div>

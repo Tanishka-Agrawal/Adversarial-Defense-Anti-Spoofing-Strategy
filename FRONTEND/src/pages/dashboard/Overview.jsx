@@ -15,6 +15,14 @@ const data = [
 ];
 
 const Overview = () => {
+  const [stats, setStats] = React.useState({
+    total_earnings_protected: '2,000',
+    active_policies: 1,
+    claims_settled: 3,
+    risk_score: 'Low'
+  });
+  const [loading, setLoading] = React.useState(true);
+
   const location = useLocation();
   let memoryName = 'Guest Worker';
   try {
@@ -23,85 +31,135 @@ const Overview = () => {
   } catch(e) {}
   const userName = location.state?.name || memoryName;
 
+  React.useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/api/dashboard/${userName}`);
+        if(res.ok) {
+           const data = await res.json();
+           setStats(data);
+        }
+      } catch(e) {
+        console.error("Backend offline, using fallback data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, [userName]);
+
   return (
-    <div className="max-w-[100rem] mx-auto space-y-10 pb-20">
+    <div className="max-w-[100rem] mx-auto space-y-12 pb-24">
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col md:flex-row justify-between items-end gap-6"
       >
-        <h1 className="text-5xl font-black text-slate-900 dark:text-white mb-2">Welcome back, {userName}! 👋</h1>
-        <p className="text-xl text-slate-500 font-bold">Here is what is happening with your coverage today.</p>
+        <div>
+          <h1 className="text-6xl font-black text-slate-900 dark:text-white mb-3 tracking-tighter">Hello, {userName}! 🚀</h1>
+          <p className="text-2xl text-slate-500 font-bold opacity-80 italic">Predictive Intelligence: <span className="text-brand-blue">Active</span></p>
+        </div>
+        <div className="bg-white/10 backdrop-blur-3xl border border-white/20 p-6 rounded-3xl shadow-2xl flex items-center gap-4">
+           <Activity className="w-8 h-8 text-brand-lightgreen animate-pulse" />
+           <div>
+             <p className="text-xs font-black uppercase text-slate-500">Global Protection</p>
+             <p className="text-xl font-black text-slate-900 dark:text-white tracking-widest">LIVE SYNC</p>
+           </div>
+        </div>
       </motion.div>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
-           <p className="text-slate-500 font-bold mb-2 uppercase tracking-widest text-sm">Current Plan</p>
-           <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Standard Shield</h3>
-           <span className="inline-flex items-center gap-2 px-4 py-2 bg-brand-lightgreen/10 text-brand-lightgreen rounded-xl font-bold uppercase tracking-wider text-sm"><ShieldCheck className="w-5 h-5"/> Active</span>
-        </div>
-        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm relative">
-           <p className="text-slate-500 font-bold mb-2 uppercase tracking-widest text-sm">Weekly Premium</p>
-           <h3 className="text-5xl font-black text-slate-900 dark:text-white mb-2">₹60</h3>
-           <p className="text-brand-blue font-bold text-sm bg-brand-blue/10 inline-block px-3 py-1 rounded-lg mt-2">Next autopay: 15 Apr</p>
-        </div>
-        <div className="bg-gradient-to-br from-brand-blue to-teal-500 p-8 rounded-3xl border border-transparent shadow-xl text-white relative overflow-hidden">
-           <div className="absolute -top-20 -right-20 w-48 h-48 bg-white/20 blur-3xl rounded-full"></div>
-           <p className="font-bold opacity-80 mb-2 uppercase tracking-widest text-sm">Total Coverage</p>
-           <h3 className="text-5xl font-black mb-2 relative z-10">₹2,000</h3>
-           <p className="font-bold text-white/80 text-sm relative z-10">Remaining limit for this week</p>
-        </div>
-        <div className="bg-orange-50 dark:bg-orange-500/10 p-8 rounded-3xl border border-orange-200 dark:border-orange-500/20 shadow-sm relative overflow-hidden">
-           <AlertTriangle className="absolute -right-4 -bottom-4 w-32 h-32 opacity-10 text-orange-500" />
-           <p className="text-orange-600 dark:text-orange-400 font-bold mb-2 uppercase tracking-widest text-sm">Active Alerts</p>
-           <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-2">Heavy Rain</h3>
-           <p className="text-slate-600 dark:text-slate-400 text-sm font-bold bg-white dark:bg-slate-950 px-3 py-2 rounded-lg inline-block mt-1">Payout highly likely tonight</p>
-        </div>
+      {/* 3D Glass Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+        {[
+          { label: "Active Plan", val: "Standard Shield", sub: "Premium ₹60", icon: ShieldCheck, color: "bg-blue-500" },
+          { label: "AI Protected Payouts", val: `₹${stats.total_earnings_protected}`, sub: "3 Claims Settled", icon: Activity, color: "bg-brand-lightgreen" },
+          { label: "Current Risk Level", val: "MODERATE", sub: "Monitoring Rain", icon: AlertTriangle, color: "bg-orange-500" },
+          { label: "Policy Coverage", val: "100%", sub: "Loss of Income Only", icon: ShieldCheck, color: "bg-indigo-500" }
+        ].map((item, idx) => (
+          <motion.div
+            key={idx}
+            whileHover={{ scale: 1.05, rotateY: 5, rotateX: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="group relative overflow-hidden bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/30 dark:border-white/10 p-8 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 hover:shadow-brand-blue/30"
+          >
+            <div className={`absolute -right-4 -bottom-4 w-24 h-24 rounded-full ${item.color} opacity-10 blur-2xl group-hover:opacity-30 transition-opacity`}></div>
+            <p className="text-slate-500 font-black mb-4 uppercase tracking-[0.2em] text-xs">{item.label}</p>
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-2">{item.val}</h3>
+            <p className="font-bold text-slate-400 text-sm">{item.sub}</p>
+            <item.icon className={`absolute top-8 right-8 w-8 h-8 ${item.color} opacity-40`} />
+          </motion.div>
+        ))}
       </div>
 
-      {/* Chart Section */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm"
+      {/* Interactive AI Simulation Widget */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="grid grid-cols-1 lg:grid-cols-3 gap-8"
       >
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+        <div className="lg:col-span-2 space-y-8">
+          <div className="bg-slate-950 text-white p-10 rounded-[3rem] shadow-2xl relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/20 to-transparent opacity-50"></div>
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-10">
+              <div className="space-y-6">
+                <h3 className="text-4xl font-black italic tracking-tighter">Interactive AI <br/> Risk Engine</h3>
+                <p className="text-slate-400 font-bold max-w-sm">Adjust the weather severity to see how our AI dynamically increases your protection buffer.</p>
+                <div className="w-full space-y-4">
+                  <label className="block text-xs font-black uppercase tracking-widest text-brand-blue">Simulate Rain Intensity</label>
+                  <input type="range" className="w-full h-4 bg-slate-800 rounded-full appearance-none cursor-pointer accent-brand-blue" />
+                </div>
+              </div>
+              <div className="bg-white/5 border border-white/10 backdrop-blur-md p-8 rounded-[2rem] text-center w-full md:w-auto">
+                 <p className="text-slate-500 font-black uppercase text-xs mb-3">AI SUGGESTED PREMIUM</p>
+                 <p className="text-6xl font-black text-white">₹85</p>
+                 <span className="inline-block mt-4 text-brand-lightgreen font-black text-sm px-4 py-2 bg-brand-lightgreen/10 rounded-full">+20% Risk Buffer Active</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Chart Card */}
+          <div className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden h-[400px]">
+             <h3 className="text-2xl font-black mb-6">Income Stability Index</h3>
+             <ResponsiveContainer width="100%" height="80%">
+              <AreaChart data={data}>
+                <Area type="monotone" dataKey="protected" stroke="#10b981" fill="#10b98133" strokeWidth={5} />
+                <Tooltip />
+              </AreaChart>
+             </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Integration Status Section */}
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-slate-900 text-white p-10 rounded-[3rem] border-4 border-brand-blue shadow-2xl flex flex-col justify-between h-full relative"
+        >
+          <div className="absolute top-0 right-0 p-8">
+            <div className="w-3 h-3 bg-brand-lightgreen rounded-full shadow-[0_0_15px_#10b981] animate-pulse"></div>
+          </div>
           <div>
-            <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Income Protection vs Disruptions</h3>
-            <p className="text-slate-500 font-bold">Your historical earnings stabilized by GigShield AI payouts</p>
+            <h3 className="text-3xl font-black mb-8 leading-tight">Zomato / Swiggy <br/> Live Sync</h3>
+            <div className="space-y-6">
+              {["Zomato", "Swiggy", "Blinkit", "Zepto"].map((app, i) => (
+                <motion.div 
+                  key={app} 
+                  initial={{ x: 50, opacity: 0 }} 
+                  animate={{ x: 0, opacity: 1 }} 
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center justify-between p-5 bg-white/5 rounded-3xl border border-white/5 hover:bg-white/10 transition-colors cursor-pointer group"
+                >
+                  <span className="font-bold text-xl group-hover:text-brand-blue transition-colors">{app}</span>
+                  <ShieldCheck className="w-6 h-6 text-brand-lightgreen" />
+                </motion.div>
+              ))}
+            </div>
           </div>
-          <div className="flex gap-4 border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-2 rounded-xl">
-             <button className="px-6 py-2 bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-slate-900 dark:text-white">This Week</button>
-             <button className="px-6 py-2 text-slate-500 hover:text-slate-900 dark:hover:text-white text-sm font-bold transition-colors">Last Week</button>
-          </div>
-        </div>
-        
-        <div className="h-[450px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-              <defs>
-                <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#94a3b8" stopOpacity={0}/>
-                </linearGradient>
-                <linearGradient id="colorProtected" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.6}/>
-                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="day" stroke="#64748b" axisLine={false} tickLine={false} dy={10} className="font-bold text-sm" />
-              <YAxis stroke="#64748b" axisLine={false} tickLine={false} dx={-10} className="font-bold text-sm" tickFormatter={(value) => `₹${value}`} />
-              <Tooltip 
-                contentStyle={{ borderRadius: '1rem', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontWeight: 'bold' }}
-                formatter={(value) => [`₹${value}`]}
-              />
-              <Area type="monotone" dataKey="income" stroke="#94a3b8" strokeWidth={3} fillOpacity={1} fill="url(#colorIncome)" name="Actual Earnings" />
-              <Area type="monotone" dataKey="protected" stroke="#10b981" strokeWidth={4} fillOpacity={1} fill="url(#colorProtected)" name="Total w/ Payouts" />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </motion.div>
+          <button className="w-full py-5 bg-gradient-to-r from-brand-blue to-cyan-500 rounded-3xl font-black text-xl hover:scale-105 transition-transform shadow-lg mt-10">
+            CONNECT NEW APP
+          </button>
+        </motion.div>
+      </motion.section>
     </div>
   );
 };

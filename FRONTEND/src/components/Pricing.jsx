@@ -32,12 +32,12 @@ const Pricing = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="pricing" className="py-28 relative overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-300">
+    <section id="pricing" className="py-10 relative overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-300">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-brand-blue/5 blur-[150px] pointer-events-none"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-24">
-          <h2 className="text-6xl md:text-[5rem] font-black mb-8 text-slate-900 dark:text-white leading-tight">Affordable Weekly Plans</h2>
-          <p className="text-slate-600 dark:text-slate-400 max-w-4xl mx-auto text-2xl leading-relaxed">Fractional pricing tailored for Indian gig workers. Pay per week, get covered securely.</p>
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-black mb-6 text-slate-900 dark:text-white leading-tight underline decoration-brand-lightgreen underline-offset-8">Weekly Protection</h2>
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-xl leading-relaxed">AI-calculated premiums for Indian delivery partners.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center max-w-[85rem] mx-auto">

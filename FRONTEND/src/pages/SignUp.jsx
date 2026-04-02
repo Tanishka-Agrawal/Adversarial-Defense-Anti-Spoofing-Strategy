@@ -7,6 +7,7 @@ import floatingImage from '../assets/floating_groceries.png';
 const SignUp = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState(['', '', '', '']);
@@ -32,16 +33,17 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Quick local DB mock to persist user session data for the login page
+    const fullName = `${firstName} ${lastName}`.trim();
+    
+    // Quick local DB mock to persist user session data for the dashboard
     const users = JSON.parse(localStorage.getItem('gigshield_users') || '[]');
-    // Clean phone number for basic normalization
     const normalizedPhone = phone.replace(/\s+/g, '');
-    users.push({ name: firstName, phone: normalizedPhone });
+    users.push({ name: fullName, phone: normalizedPhone });
     localStorage.setItem('gigshield_users', JSON.stringify(users));
 
     // Simulate slight delay then route smoothly
     setTimeout(() => {
-      navigate('/dashboard', { state: { name: firstName || 'User' }});
+      navigate('/dashboard', { state: { name: fullName || 'User' }});
     }, 500);
   };
 
@@ -124,7 +126,13 @@ const SignUp = () => {
               </div>
               <div>
                 <label className="block text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">Last Name</label>
-                <input type="text" className="w-full px-5 py-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all shadow-sm text-xl" placeholder="Kumar" />
+                <input 
+                  type="text" 
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="w-full px-5 py-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-blue outline-none transition-all shadow-sm text-xl" 
+                  placeholder="Kumar" 
+                />
               </div>
             </div>
 
