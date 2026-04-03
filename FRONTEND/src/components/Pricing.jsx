@@ -78,7 +78,7 @@ const Pricing = () => {
               <button 
                 onClick={() => navigate('/checkout', { state: { plan } })}
                 className={`w-full py-6 rounded-3xl font-black transition-all text-2xl
-                ${plan.popular ? 'bg-brand-blue hover:bg-blue-600 text-white shadow-xl hover:scale-105' : 'bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white hover:scale-105'}`}>
+                ${plan.popular ? 'bg-brand-blue hover:bg-purple-600 text-white shadow-xl hover:scale-105' : 'bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white hover:scale-105'}`}>
                 Choose {plan.name}
               </button>
             </motion.div>

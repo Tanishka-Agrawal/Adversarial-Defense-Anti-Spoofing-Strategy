@@ -31,7 +31,7 @@ const PaymentSuccess = () => {
         
         <button 
           onClick={() => navigate('/dashboard')}
-          className="inline-flex items-center gap-4 bg-brand-blue hover:bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-2xl transition-transform hover:scale-105 shadow-xl"
+          className="inline-flex items-center gap-4 bg-brand-blue hover:bg-purple-600 text-white px-10 py-5 rounded-2xl font-black text-2xl transition-transform hover:scale-105 shadow-xl"
         >
           Go to Dashboard <ArrowRight className="w-8 h-8" />
         </button>

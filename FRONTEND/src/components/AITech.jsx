@@ -59,7 +59,7 @@ const AITech = () => {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="relative z-10"
                >
-                 <Cpu className="w-40 h-40 text-blue-400 drop-shadow-[0_0_20px_#60a5fa]" />
+                 <Cpu className="w-40 h-40 text-purple-400 drop-shadow-[0_0_20px_#60a5fa]" />
                </motion.div>
                <div className="absolute bottom-6 font-mono text-brand-blue font-black tracking-widest text-xs animate-pulse underline">ACTIVE NEURAL LOGIC</div>
             </div>

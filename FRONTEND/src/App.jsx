@@ -19,7 +19,7 @@ import flyingBg from './assets/flying_background.png';
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 selection:bg-brand-blue/30 transition-colors duration-300 relative">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 selection:bg-purple-600/30 transition-colors duration-300 relative">
       <div 
         className="fixed inset-0 z-0 opacity-15 dark:opacity-10 pointer-events-none bg-cover bg-center bg-no-repeat transition-opacity duration-300 mix-blend-multiply dark:mix-blend-screen"
         style={{ backgroundImage: `url(${flyingBg})` }}

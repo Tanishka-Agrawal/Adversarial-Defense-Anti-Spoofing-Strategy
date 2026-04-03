@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, ArrowRight, User, Eye, EyeOff } from 'lucide-react';
+import { Shield, ArrowRight, User, Eye, EyeOff, Lock } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import PopcornRain from '../components/PopcornRain';
+import sideAsset from '../assets/signup_3d_bg.png';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,7 +31,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Check mock database for registered phone number
     const users = JSON.parse(localStorage.getItem('gigshield_users') || '[]');
     const normalizedPhone = phone.replace(/\s+/g, '');
     const foundUser = users.find(u => u.phone === normalizedPhone);
@@ -43,126 +42,108 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
-      <PopcornRain />
+    <div className="min-h-screen bg-[#020617] flex items-center justify-center p-4 sm:p-10 relative overflow-hidden">
+      {/* Background Gradients */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-600/5 rounded-full blur-[150px] -mr-64 -mt-64 animate-pulse"></div>
       
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex justify-center"
-        >
-          <div className="bg-brand-blue/20 p-4 rounded-xl">
-            <Shield className="w-10 h-10 text-brand-blue" />
-          </div>
-        </motion.div>
-        <motion.h2 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="mt-8 text-center text-5xl md:text-6xl font-black text-slate-900 dark:text-white"
-        >
-          Sign in to GigShield
-        </motion.h2>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mt-4 text-center text-xl text-slate-600 dark:text-slate-400"
-        >
-          Or{' '}
-          <Link to="/signup" className="font-bold text-brand-blue hover:text-blue-500 transition-colors">
-            create a new account
-          </Link>
-        </motion.p>
-      </div>
-
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        className="mt-12 sm:mx-auto sm:w-full sm:max-w-lg relative z-10"
-      >
-        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl py-12 px-8 shadow-2xl rounded-[2rem] border border-slate-200 dark:border-slate-800 sm:px-14">
-          <form className="space-y-8" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="phone" className="block text-lg font-bold text-slate-700 dark:text-slate-300">
-                Phone Number / Gig ID
-              </label>
-              <div className="mt-3 relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <User className="h-6 w-6 text-slate-400" />
+      <div className="w-full max-w-6xl flex flex-col lg:flex-row glass-dark rounded-[4rem] shadow-2xl overflow-hidden relative z-10 border border-white/10 min-h-[700px]">
+        
+        {/* Visual Panel (Left side) */}
+        <div className="hidden lg:flex w-2/5 relative flex-col justify-between p-16 overflow-hidden border-r border-white/5">
+           <img src={sideAsset} alt="Auth Background" className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" />
+           <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent"></div>
+           
+           <div className="relative z-10 space-y-8">
+              <Link to="/" className="flex items-center gap-4 group">
+                <div className="bg-purple-600/30 p-4 rounded-3xl border border-purple-500/40">
+                  <Shield className="w-10 h-10 text-purple-400" />
                 </div>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="text"
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="appearance-none block w-full pl-14 px-5 py-4 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-brand-blue focus:border-brand-blue text-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white transition-colors"
-                  placeholder="98765 43210"
-                />
-              </div>
-            </div>
+                <span className="text-3xl font-black tracking-tighter text-white">GigShield <span className="text-emerald-500">AI</span></span>
+              </Link>
+              
+              <h2 className="text-5xl font-black text-white leading-tight italic">Welcome Back to <br/> Secure Ops.</h2>
+              <p className="text-slate-400 font-bold max-w-xs leading-relaxed text-lg">
+                Re-authenticate your session to access your autonomous insurance dashboard.
+              </p>
+           </div>
 
-            <div>
-              <label htmlFor="pin" className="block text-lg font-bold text-slate-700 dark:text-slate-300">
-                4-Digit PIN
-              </label>
-              <div className="mt-3 text-slate-800 dark:text-white flex items-center gap-4">
-                <div className="flex justify-between gap-4 flex-1">
-                  {[0, 1, 2, 3].map((index) => (
-                    <input
-                      key={index}
-                      ref={(el) => (inputRefs.current[index] = el)}
-                      type={showPin ? "text" : "password"}
-                      maxLength={1}
-                      required
-                      value={pin[index]}
-                      onChange={(e) => handlePinChange(index, e.target.value)}
-                      onKeyDown={(e) => handlePinKeyDown(index, e)}
-                      className="[&::-ms-reveal]:hidden [&::-ms-clear]:hidden w-16 h-16 text-center text-3xl font-black border border-slate-300 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-800 focus:ring-2 focus:ring-brand-blue focus:border-brand-blue outline-none transition-colors text-slate-900 dark:text-white"
-                    />
-                  ))}
-                </div>
-                <button type="button" onClick={() => setShowPin(!showPin)} className="h-16 w-16 flex items-center justify-center bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl text-slate-500 hover:text-brand-blue transition-colors flex-shrink-0">
-                  {showPin ? <EyeOff className="w-8 h-8" /> : <Eye className="w-8 h-8" />}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-8">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-6 w-6 text-brand-blue focus:ring-brand-blue bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-3 block text-base font-medium text-slate-700 dark:text-slate-300">
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-base">
-                <a href="#" className="font-bold text-brand-blue hover:text-blue-500 transition-colors">
-                  Forgot PIN?
-                </a>
-              </div>
-            </div>
-
-            <div className="pt-6">
-              <button
-                type="submit"
-                className="w-full flex justify-center py-5 px-6 border border-transparent rounded-2xl shadow-xl text-2xl font-black text-white bg-brand-blue hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue focus:ring-offset-slate-900 transition-all hover:scale-[1.02]"
-              >
-                Sign in securely <ArrowRight className="ml-3 mt-1.5 w-6 h-6" />
-              </button>
-            </div>
-          </form>
+           <div className="relative z-10 pt-10 border-t border-white/5">
+              <p className="text-slate-500 font-black uppercase tracking-[0.4em] text-[10px]">Secure Login Gateway v4.0</p>
+           </div>
         </div>
-      </motion.div>
+
+        {/* Form Area */}
+        <div className="flex-1 p-10 sm:p-20 flex flex-col justify-center bg-slate-950/20 backdrop-blur-md">
+           <form className="w-full max-w-md mx-auto space-y-10" onSubmit={handleSubmit}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-10"
+              >
+                <div>
+                  <h1 className="text-5xl font-black text-white mb-4 italic tracking-tighter text-gradient">Login.</h1>
+                  <p className="text-slate-500 font-bold text-lg">Enter your secure credentials.</p>
+                </div>
+
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Phone Number / Gig ID</label>
+                  <div className="relative">
+                    <User className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-slate-500" />
+                    <input 
+                      type="text" required value={phone} onChange={e => setPhone(e.target.value)}
+                      className="w-full bg-white/5 border border-white/5 rounded-2xl p-5 pl-14 text-white font-bold focus:ring-2 focus:ring-purple-500 outline-none transition-all hover:bg-white/10 text-xl"
+                      placeholder="98765 43210"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">4-Digit Secret PIN</label>
+                  <div className="flex items-center gap-4">
+                    <div className="flex justify-between gap-4 flex-1">
+                      {[0, 1, 2, 3].map((index) => (
+                        <input
+                          key={index}
+                          ref={(el) => (inputRefs.current[index] = el)}
+                          type={showPin ? "text" : "password"}
+                          maxLength={1}
+                          required
+                          value={pin[index]}
+                          onChange={(e) => handlePinChange(index, e.target.value)}
+                          onKeyDown={(e) => handlePinKeyDown(index, e)}
+                          className="w-full h-16 text-center text-3xl font-black border border-white/5 rounded-2xl bg-white/5 focus:ring-2 focus:ring-purple-500 outline-none transition-all text-white hover:bg-white/10"
+                        />
+                      ))}
+                    </div>
+                    <button type="button" onClick={() => setShowPin(!showPin)} className="h-16 w-16 flex items-center justify-center bg-white/5 border border-white/5 rounded-2xl text-slate-500 hover:text-purple-400 transition-colors shrink-0">
+                      {showPin ? <EyeOff className="w-8 h-8" /> : <Eye className="w-8 h-8" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                     <input type="checkbox" id="remember" className="w-5 h-5 rounded border-white/10 bg-white/5 text-purple-600 focus:ring-purple-500" />
+                     <label htmlFor="remember" className="text-slate-500 font-bold text-sm">Keep Session Active</label>
+                  </div>
+                  <a href="#" className="text-purple-500 font-black text-sm hover:text-purple-400 transition-colors italic">Reset Vault PIN</a>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-purple-600 p-6 rounded-3xl font-black text-2xl text-white hover:scale-[1.02] transition-all shadow-xl shadow-purple-500/20 flex items-center justify-center gap-3"
+                >
+                  SIGN IN SECURELY <Lock className="w-6 h-6" />
+                </button>
+
+                <p className="text-center text-slate-500 font-bold text-sm">
+                  New to the protocol? {' '}
+                  <Link to="/signup" className="text-white hover:text-purple-400 transition-all font-black italic underline decoration-purple-500">Initialize Node</Link>
+                </p>
+              </motion.div>
+           </form>
+        </div>
+      </div>
     </div>
   );
 };

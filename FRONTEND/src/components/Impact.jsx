@@ -1,41 +1,54 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const impacts = [
-  { title: "Income Stability", desc: "No more panic when it starts pouring. Stay safe, your baseline income is secured.", stat: "100%", sub: "Guaranteed" },
-  { title: "Instant Solace", desc: "Our system bypasses traditional claims and manually triggers IMPS/UPI payouts instantly.", stat: "5 min", sub: "Disbursal" },
-  { title: "Transparent Rules", desc: "You know exactly what weather condition triggers a payout. No hidden clauses.", stat: "0", sub: "Hidden fees" }
-];
+import { Users, Globe, IndianRupee, Heart } from 'lucide-react';
 
 const Impact = () => {
-  return (
-    <section id="impact" className="py-28 relative overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-300">
-      <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-28">
-          <h2 className="text-6xl md:text-[5rem] font-black mb-8 text-slate-900 dark:text-white leading-tight">Impact on Gig Workers</h2>
-          <p className="text-slate-600 dark:text-slate-400 max-w-4xl mx-auto text-2xl leading-relaxed">We are improving the livelihoods of thousands by bringing safety-nets to the gig economy.</p>
-        </div>
+    const stats = [
+        { icon: Users, label: "Active Workers protected", val: "1.2M+", color: "text-purple-500" },
+        { icon: Globe, label: "Zones with Live Nodes", val: "250+", color: "text-emerald-500" },
+        { icon: IndianRupee, label: "Total Automatic Payouts", val: "₹15Cr+", color: "text-blue-500" },
+        { icon: Heart, label: "Community Support", val: "98%", color: "text-rose-500" }
+    ];
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {impacts.map((impact, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-10 rounded-[2.5rem] shadow-sm hover:shadow-xl dark:shadow-none transition-shadow"
-            >
-              <div className="text-brand-blue font-black text-7xl md:text-[6rem] mb-6">{impact.stat}</div>
-              <div className="text-brand-lightgreen text-xl font-bold uppercase tracking-widest mb-10">{impact.sub}</div>
-              <h4 className="text-3xl font-black text-slate-900 dark:text-white mb-6">{impact.title}</h4>
-              <p className="text-slate-600 dark:text-slate-400 text-xl leading-relaxed">{impact.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+    return (
+        <section id="impact" className="py-32 bg-[#020617] relative overflow-hidden border-t border-white/5">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-purple-600/5 rounded-full blur-[200px] pointer-events-none"></div>
+            
+            <div className="max-w-[120rem] mx-auto px-12 lg:px-24">
+                <div className="text-center mb-24 max-w-4xl mx-auto">
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        className="inline-flex items-center gap-3 px-6 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-400 font-extrabold text-xs uppercase tracking-widest mb-10"
+                    >
+                        THE GIGSHIELD EFFECT
+                    </motion.div>
+                    <h2 className="text-7xl lg:text-8xl font-black text-white leading-tight tracking-tighter italic">
+                        Real Impact. <br />
+                        <span className="text-gradient">Zero Wait Times.</span>
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                    {stats.map((stat, i) => (
+                        <motion.div 
+                            key={i}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="glass p-12 rounded-[3.5rem] border-white/5 hover:border-purple-500/30 transition-all group"
+                        >
+                            <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform">
+                                <stat.icon className={`w-10 h-10 ${stat.color}`} />
+                            </div>
+                            <h3 className="text-5xl font-black text-white mb-4 tracking-tighter leading-none italic">{stat.val}</h3>
+                            <p className="text-slate-500 font-black uppercase text-xs tracking-widest">{stat.label}</p>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default Impact;

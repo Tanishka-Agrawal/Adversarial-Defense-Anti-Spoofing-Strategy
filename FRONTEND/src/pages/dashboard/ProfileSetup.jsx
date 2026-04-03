@@ -74,7 +74,7 @@ const ProfileSetup = () => {
 
           <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <p className="text-sm font-bold text-slate-500">Your data is securely encrypted.</p>
-            <button type="submit" className="px-10 py-4 bg-brand-blue hover:bg-blue-600 text-white rounded-xl font-black transition-colors shadow-lg shadow-brand-blue/20 flex items-center gap-2">
+            <button type="submit" className="px-10 py-4 bg-brand-blue hover:bg-purple-600 text-white rounded-xl font-black transition-colors shadow-lg shadow-brand-blue/20 flex items-center gap-2">
               {isSaved ? <><CheckCircle className="w-5 h-5" /> Saved!</> : 'Save Profile'}
             </button>
           </div>

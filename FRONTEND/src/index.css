@@ -1,4 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --midnight-bg: #020617;
+  --midnight-card: #0f172a;
+  --accent-blue: #8b5cf6; /* Replaced Blue with Purple */
+  --accent-cyan: #6366f1; /* Replaced Cyan with Indigo */
+  --accent-teal: #10b981;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--midnight-bg);
+  }
+  
+  body {
+    @apply text-slate-200;
+    overflow-x: hidden;
+  }
+}
+
 @layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-dark {
+    @apply bg-slate-950/40 backdrop-blur-2xl border border-white/5;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-purple-500 via-indigo-500 to-emerald-400 bg-clip-text text-transparent;
+  }
+
   .animate-marquee {
     display: flex;
     white-space: nowrap;
@@ -9,10 +45,19 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
-}
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
+  /* Custom scrollbar for premium feel */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #020617;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
   }
 }
