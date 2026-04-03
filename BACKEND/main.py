@@ -197,11 +197,30 @@ def get_dashboard_stats(user_id: str):
     """
     Returns summary stats for the dashboard overview.
     """
+    # Simulate dynamic risk based on mock weather if real API is too slow
+    risk_levels = ["Low", "Moderate", "High"]
     return {
-        "total_earnings_protected": str(random.randint(1500, 3000)),
+        "total_earnings_protected": str(random.randint(4500, 7000)),
         "active_policies": 1,
-        "claims_settled": random.randint(1, 5),
-        "risk_score": random.choice(["Low", "Moderate"])
+        "claims_settled": random.randint(3, 8),
+        "risk_score": random.choice(risk_levels)
+    }
+
+@app.get("/api/autonomous-trigger")
+def autonomous_trigger(lat: float, lon: float):
+    """
+    Simulates the 'Self-Executing' logic.
+    If weather severity is Moderate/High, it triggers a mock payout.
+    """
+    weather = get_weather_by_coords(lat, lon)
+    is_triggered = weather["is_disrupted"]
+    
+    return {
+        "status": "TRIGGERED" if is_triggered else "MONITORING",
+        "weather": weather,
+        "action": "Initiating Autonomous Payout" if is_triggered else "Watching Thresholds",
+        "contract_id": f"SC-{random.randint(100000, 999999)}",
+        "payout": random.randint(400, 1200) if is_triggered else 0
     }
 
 @app.post("/api/instant-payout")
@@ -235,6 +254,54 @@ def process_payout(user_id: str, city: str):
         "tx_id": f"TXN-{random.randint(10000, 99999)}",
         "message": "AI Verified: Disruption found + Shift confirmed. Payout initiated."
     }
+
+# --- STEP 1: GIG INTEGRATION SERVICE (MOCK LAYER) ---
+
+@app.get("/api/integrations/zomato/{user_id}")
+def get_zomato_data(user_id: str):
+    """Abstraction layer mimicking a real Zomato Partner API response"""
+    return {
+        "userId": user_id,
+        "platform": "Zomato",
+        "avgDailyIncome": random.randint(700, 1200),
+        "ordersCompleted": random.randint(15, 30),
+        "activeHours": random.randint(6, 10),
+        "zone_risk": "Moderate",
+        "status": "Verified"
+    }
+
+@app.get("/api/integrations/swiggy/{user_id}")
+def get_swiggy_data(user_id: str):
+    """Abstraction layer mimicking a real Swiggy Partner API response"""
+    return {
+        "userId": user_id,
+        "platform": "Swiggy",
+        "avgDailyIncome": random.randint(600, 1100),
+        "ordersCompleted": random.randint(12, 25),
+        "activeHours": random.randint(5, 9),
+        "zone_risk": "Low",
+        "status": "Verified"
+    }
+
+# --- STEP 5: WEBHOOK SIMULATION (ADVANCED) ---
+
+class WebhookUpdate(BaseModel):
+    userId: str
+    event: str
+    earnings_loss: float
+
+@app.post("/api/webhook/delivery-update")
+def process_webhook(update: WebhookUpdate):
+    """Simulates real-world platform triggers (e.g. rain/loss updates)"""
+    new_alert = {
+        "id": len(ALERTS_DB) + 1,
+        "type": "Webhook",
+        "message": f"CRITICAL: {update.event} detected. Estimated platform loss: ₹{update.earnings_loss}",
+        "severity": "High",
+        "time": "Just Now"
+    }
+    ALERTS_DB.insert(0, new_alert)
+    return {"status": "success", "message": "Autonomous payout trigger initiated via Webhook."}
 
 if __name__ == "__main__":
     import uvicorn

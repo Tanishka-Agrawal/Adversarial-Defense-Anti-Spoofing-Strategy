@@ -27,6 +27,23 @@ const DashboardLayout = () => {
   } catch(e) {}
   const userName = location.state?.name || memoryName;
 
+  const [city, setCity] = React.useState('Your Zone');
+
+  React.useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          const res = await fetch(`http://127.0.0.1:8000/api/weather-by-location?lat=${latitude}&lon=${longitude}`);
+          if (res.ok) {
+            const data = await res.json();
+            setCity(data.city);
+          }
+        } catch (e) { console.error("City fetch failed"); }
+      });
+    }
+  }, []);
+
   const navLinks = [
     { to: '/dashboard', icon: Home, label: 'Overview' },
     { to: '/dashboard/plans', icon: Shield, label: 'My Insurance Plan' },
@@ -131,10 +148,10 @@ const DashboardLayout = () => {
         {/* Live Disruption Ticker */}
         <div className="bg-purple-600 text-white py-4 overflow-hidden whitespace-nowrap border-b border-purple-500 relative z-20 shadow-lg">
           <div className="flex animate-marquee gap-16 items-center">
-            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><AlertTriangle className="w-4 h-4 text-emerald-400" /> LIVE: Rain Alert in Mumbai - Payouts Gated</span>
-            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><ShieldCheck className="w-4 h-4 text-emerald-400" /> SYSTEM HEALTH: All Platforms Verified Stable</span>
-            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><Activity className="w-4 h-4 text-emerald-400" /> TICKER: New policy buffer for Heatwaves active</span>
-            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><AlertTriangle className="w-4 h-4 text-emerald-400" /> LIVE: Rain Alert in Mumbai - Payouts Gated</span>
+            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><ShieldCheck className="w-4 h-4 text-emerald-400" /> LIVE: Protection Active in {city} - All Systems Stable</span>
+            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><Activity className="w-4 h-4 text-emerald-400" /> TICKER: Hyper-Local Node Sync in {city} Verified</span>
+            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><AlertTriangle className="w-4 h-4 text-amber-300" /> NOTICE: Deep-Scan Mode Enabled for {city} Region</span>
+            <span className="flex items-center gap-3 font-black uppercase text-xs tracking-widest"><ShieldCheck className="w-4 h-4 text-emerald-400" /> LIVE: Protection Active in {city} - All Systems Stable</span>
           </div>
         </div>
 

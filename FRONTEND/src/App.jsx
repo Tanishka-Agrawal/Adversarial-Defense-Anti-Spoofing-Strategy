@@ -14,6 +14,7 @@ import ProfileSetup from './pages/dashboard/ProfileSetup';
 import RiskAlerts from './pages/dashboard/RiskAlerts';
 import PayoutHistory from './pages/dashboard/PayoutHistory';
 import Plans from './pages/dashboard/Plans';
+import AIAssistant from './components/AIAssistant';
 
 import flyingBg from './assets/flying_background.png';
 
@@ -47,6 +48,7 @@ function App() {
         <Footer />
       </div>
       </div>
+      <AIAssistant />
     </div>
   );
 }

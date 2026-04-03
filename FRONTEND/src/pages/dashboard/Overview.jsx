@@ -163,7 +163,6 @@ const Overview = () => {
              </div>
           </div>
 
-          {/* Live Weather & Location Widget */}
           <div className="glass rounded-[3.5rem] p-12 relative overflow-hidden bg-gradient-to-br from-purple-950/20 to-transparent flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="space-y-6">
                  <div className="flex items-center gap-4 px-6 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full w-fit">
@@ -197,58 +196,58 @@ const Overview = () => {
 
         <div className="space-y-10">
           <div className="glass-dark rounded-[3.5rem] border-purple-500/30 p-10 h-full flex flex-col">
-             <h3 className="text-3xl font-black text-white mb-10 leading-none">Live Node <br/> Integration</h3>
+             <h3 className="text-3xl font-black text-white mb-6 leading-none">Live Node <br/> Integration</h3>
+             <div className="grid grid-cols-3 gap-6 mb-10">
+                {[
+                  { name: 'Zomato', color: 'bg-rose-500/10 border-rose-500/20 text-rose-500', icon: 'Z' },
+                  { name: 'Swiggy', color: 'bg-orange-500/10 border-orange-500/20 text-orange-500', icon: 'S' },
+                  { name: 'Uber', color: 'bg-white/5 border-white/10 text-white', icon: 'U' },
+                  { name: 'Porter', color: 'bg-blue-500/10 border-blue-500/20 text-blue-500', icon: 'P' },
+                  { name: 'Blinkit', color: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500', icon: 'B' },
+                  { name: 'Zepto', color: 'bg-purple-500/10 border-purple-500/20 text-purple-600', icon: 'Z' }
+                ].map((platform) => (
+                  <motion.button
+                    key={platform.name}
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={async () => {
+                      const status = document.getElementById('sync-status');
+                      status.classList.remove('hidden');
+                      status.classList.replace('text-emerald-500', 'text-slate-400');
+                      const steps = [`Authenticating with ${platform.name}...`, "Mapping Platform Logs...", "Handshake Secure."];
+                      for (let step of steps) {
+                        status.innerText = "⏳ " + step;
+                        await new Promise(r => setTimeout(r, 1200));
+                      }
+                      status.innerText = `✅ ${platform.name} Synced Successfully.`;
+                      status.classList.replace('text-slate-400', 'text-emerald-500');
+                      if(!apps.includes(platform.name)) setApps([platform.name, ...apps]);
+                    }}
+                    className={`p-6 rounded-[2rem] border ${platform.color} flex flex-col items-center justify-center gap-3 group transition-all hover:bg-white/10`}
+                  >
+                    <div className="text-3xl font-black italic">{platform.icon}</div>
+                    <span className="text-[10px] font-black uppercase tracking-widest opacity-60">{platform.name}</span>
+                  </motion.button>
+                ))}
+             </div>
+             <p id="sync-status" className="hidden text-xs font-black text-slate-400 mb-10 text-center italic animate-pulse"></p>
              <div className="space-y-4 flex-1">
                 {apps.map((app, i) => (
-                  <motion.div 
-                    key={app} 
-                    initial={{ x: 20, opacity: 0 }} 
-                    whileInView={{ x: 0, opacity: 1 }} 
-                    transition={{ delay: i * 0.1 }}
-                    className="flex items-center justify-between p-6 bg-white/5 rounded-[2rem] border border-white/5 group hover:bg-white/10 transition-all cursor-pointer"
-                  >
+                  <motion.div key={app} initial={{ x: 20, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex items-center justify-between p-6 bg-white/5 rounded-[2rem] border border-white/5 group hover:bg-white/10 transition-all cursor-pointer">
                     <div className="flex items-center gap-4">
-                       <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center font-black text-slate-500">
-                          {app.charAt(0)}
-                       </div>
+                       <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center font-black text-slate-500">{app.charAt(0)}</div>
                        <span className="font-black text-xl text-slate-300 group-hover:text-purple-400 transition-colors">{app}</span>
                     </div>
                     <ShieldCheck className="w-6 h-6 text-emerald-500 shadow-xl" />
                   </motion.div>
                 ))}
              </div>
-             <button 
-                onClick={addNewApp}
-                className="w-full mt-10 py-6 bg-purple-600 rounded-[2rem] font-black text-xl hover:scale-105 transition-transform shadow-2xl shadow-purple-500/40 text-white flex items-center justify-center gap-3"
-             >
-                ADD NEW APP <ArrowUpRight className="w-6 h-6" />
+             <button onClick={addNewApp} className="w-full mt-10 py-5 glass rounded-[2rem] font-black text-lg hover:bg-white/5 transition-all text-white border-white/10 flex items-center justify-center gap-3">
+                MANAGE APPS <Activity className="w-5 h-5" />
              </button>
           </div>
         </div>
       </div>
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        className="glass rounded-[4rem] p-16 relative flex flex-col xl:flex-row items-center gap-16"
-      >
-        <div className="flex-1 space-y-10">
-           <div className="inline-flex items-center gap-3 px-6 py-2 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-500 font-extrabold text-xs uppercase tracking-widest">
-              Simulation Engine Active
-           </div>
-           <h3 className="text-5xl font-black text-white italic tracking-tighter leading-none">
-             Dynamic AI Risk Simulation
-           </h3>
-           <p className="text-xl text-slate-400 font-bold max-w-lg">
-             Adjust our simulation intensity to see how the parametric engine calculates your <span className="text-white underline font-black italic">disruption buffer</span> in milliseconds.
-           </p>
-        </div>
-        <div className="w-full xl:w-[450px] bg-slate-950 p-12 rounded-[3.5rem] border-2 border-purple-600 shadow-2xl shadow-purple-600/10 text-center space-y-8">
-           <p className="text-slate-500 font-black uppercase text-xs tracking-widest">ESTIMATED AI BUFFER</p>
-           <div className="text-8xl font-black text-gradient italic tracking-tighter">₹120</div>
-           <p className="text-emerald-500 font-bold italic underline decoration-2">Self-Executing Contract Ready</p>
-        </div>
-      </motion.div>
     </div>
   );
 };
