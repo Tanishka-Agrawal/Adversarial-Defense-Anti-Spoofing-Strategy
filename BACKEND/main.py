@@ -60,6 +60,85 @@ def get_real_weather(city: str):
         # Fallback for demo if API fails
         return {"is_disrupted": True, "condition": "Rain (Simulated)", "temp": 28, "severity": "Moderate"}
 
+def get_weather_by_coords(lat: float, lon: float):
+    """
+    Parametric Trigger: Checks actual weather for specific coordinates.
+    """
+    try:
+        url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={WEATHER_API_KEY}&units=metric"
+        response = requests.get(url).json()
+        
+        main_weather = response.get("weather", [{}])[0].get("main", "Clear")
+        description = response.get("weather", [{}])[0].get("description", "clear sky")
+        temp = response.get("main", {}).get("temp", 25)
+        name = response.get("name", "Unknown Area")
+        
+        # Disruption detection logic
+        is_disrupted = main_weather in ["Rain", "Thunderstorm", "Drizzle", "Snow", "Smoke", "Dust", "Fog"]
+        severity = "High" if main_weather in ["Thunderstorm", "Snow"] else "Moderate" if is_disrupted else "Low"
+        
+        return {
+            "is_disrupted": is_disrupted,
+            "condition": main_weather,
+            "description": description.capitalize(),
+            "temp": temp,
+            "severity": severity,
+            "city": name
+        }
+    except Exception as e:
+        return {"is_disrupted": True, "condition": "Rain (Simulated)", "temp": 28, "severity": "Moderate", "city": "Mumbai"}
+
+def generate_recommendation(income: float, risk_level: str):
+    """
+    AI Policy Recommendation Logic.
+    """
+    if risk_level == "High":
+        return {
+            "plan_name": "Storm Shield Pro",
+            "coverage": "100% Income Protected",
+            "premium": round(income * 0.02, 2),
+            "benefit": "Covers even minor drizzles and minor delays."
+        }
+    elif income > 8000:
+        return {
+            "plan_name": "Premium Executive",
+            "coverage": "Full Weekly Buffer",
+            "premium": 150.0,
+            "benefit": "Includes platform health monitoring and health insurance."
+        }
+    else:
+        return {
+            "plan_name": "Standard Gig Saver",
+            "coverage": "Rain & Heatwave Only",
+            "premium": 60.0,
+            "benefit": "Essential protection for peak hour disruptions."
+        }
+
+# --- API ENDPOINTS ---
+
+@app.get("/api/recommend-policy")
+def recommend_policy(income: float = 5000.0, lat: float = None, lon: float = None):
+    """
+    Requirement: Location-based policy suggestion.
+    """
+    risk = "Low"
+    city_name = "Unknown"
+    if lat and lon:
+        weather = get_weather_by_coords(lat, lon)
+        risk = weather["severity"]
+        city_name = weather["city"]
+    
+    recommendation = generate_recommendation(income, risk)
+    return {
+        "location": city_name,
+        "current_risk": risk,
+        "recommendation": recommendation
+    }
+
+@app.get("/api/weather-by-location")
+def weather_by_location(lat: float, lon: float):
+    return get_weather_by_coords(lat, lon)
+
 def simulate_platform_check(user_id: str, platform: str):
     """
     Simulates checking Zomato/Swiggy internal logs.
@@ -73,8 +152,6 @@ def simulate_platform_check(user_id: str, platform: str):
         "verified": had_shift
     }
 
-# --- API ENDPOINTS ---
-
 # --- REAL-TIME ALERTS STORAGE ---
 ALERTS_DB = [
     {"id": 1, "type": "Weather", "message": "Heavy Rain expected in Mumbai tonight. Stay safe!", "severity": "High", "time": "1 min ago"},
@@ -83,6 +160,7 @@ ALERTS_DB = [
 
 @app.get("/api/alerts")
 def get_alerts():
+# ... (existing code remains as is from here down, just showing the insertion point)
     """
     Requirement: Real-time trigger monitoring.
     This endpoint is polled by the frontend to show live risk warnings.
@@ -113,6 +191,18 @@ def verify_platforms(user_id: str):
     platforms = ["Zomato", "Swiggy", "Blinkit", "Zepto"]
     results = [simulate_platform_check(user_id, p) for p in platforms]
     return {"user_id": user_id, "active_platform_verifications": results}
+
+@app.get("/api/dashboard/{user_id}")
+def get_dashboard_stats(user_id: str):
+    """
+    Returns summary stats for the dashboard overview.
+    """
+    return {
+        "total_earnings_protected": str(random.randint(1500, 3000)),
+        "active_policies": 1,
+        "claims_settled": random.randint(1, 5),
+        "risk_score": random.choice(["Low", "Moderate"])
+    }
 
 @app.post("/api/instant-payout")
 def process_payout(user_id: str, city: str):
